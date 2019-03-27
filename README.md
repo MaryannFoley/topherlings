@@ -2,8 +2,8 @@
 ### Maryann Foley (PM), Joan Chirinos, Mohtasim Howlader, Joyce Liao
 
 #### Data Set
-[Kickstarter Projects](https://www.kaggle.com/kemical/kickstarter-projects?fbclid=IwAR0sQs_2IuO4t7lyr1MAzcyX0GSQym-lK5mL14QNL-RFD3EXtOL8Bq1rfjQ): data for project analysis, provides information on types of projects and funding statistics
-
+[Kickstarter Projects](https://www.kaggle.com/kemical/kickstarter-projects?fbclid=IwAR0sQs_2IuO4t7lyr1MAzcyX0GSQym-lK5mL14QNL-RFD3EXtOL8Bq1rfjQ): 
+Data on kickstarter projects since the launch of kickstarter in 2009 till 2018. There is information provided about project categories, goals, and funding. Kickstarter has been a very effective tool in the creation of new products that allows consumers to invest directly in the products they want.  We wanted to use this data to see what types of projects are the most commonly created and which are the most funded.
 #### Data Visualization
 * Kickstarter projects are grouped by categories from which the user can choose to explore in further detail
 * Projects in their respective categories are ranked according to different factors such as amount of money pledged, number of backers, etc
