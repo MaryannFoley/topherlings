@@ -17,4 +17,16 @@ Data on kickstarter projects since the launch of kickstarter in 2009 till 2018. 
 * Data are attached to color-coded circle elements, similar to the [Obama Budget Proposal](https://archive.nytimes.com/www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html?fbclid=IwAR1Xz3EraH55cscQreC9mkNw3XD3VDGyAjF-7q5Yju2DwEgy1S7_SLkOpsA) example
 * Dynamic sizing and arrangement to reflect relative values
 
-#### Sketch
+address.
+### Launch Instructions
+1. Go to [root repository](https://github.com/MaryannFoley/topherlings) and click "Clone or Download" button
+2. Copy the ssh/https link and run `$ git clone <link>`
+3. Make sure the latest version of Python (currently Python 3.7.1) is installed. If not, download it [here](https://www.python.org/downloads/).
+4. Install virtualenv by running `$ pip install virtualenv`
+   * Make a venv by running `$ python3 -m venv ENV_DIR`
+   * Activate it by running `$ . /ENV_DIR/bin/activate`
+   * Deactivate it by running `$ deactivate`
+5. Install Flask and wheel with `$ pip install flask` and `$ pip install wheel` (this is a Flask application)
+6. Make sure virtual enviornment is activated
+7. Run `$ python app.py`
+8. Launch the root route (http://127.0.0.1:5000/) in your browser to go to the login page.
