@@ -1,5 +1,8 @@
+let HEIGHT = 600;
+let WIDTH = 800;
+
 var body = d3.select("body");
-var svg = body.append("svg").attr("height", 500).attr("width", 500).attr("style", "border: 1px solid black");
+var svg = body.append("svg").attr("height", HEIGHT).attr("width", WIDTH).attr("style", "border: 1px solid black");
 
 // [category, project count, funding, backers]
 
@@ -17,10 +20,9 @@ var svg = body.append("svg").attr("height", 500).attr("width", 500).attr("style"
 //     console.log(data);
 
 
-d3.csv("kickstarter.csv", function(data) {
+d3.csv(data_sr, function(error, data) {
     console.log(data);
-}
-)
+});
 
     // var max_projects = 0;
     // var max_funding = 0;
