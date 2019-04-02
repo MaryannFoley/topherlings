@@ -17,7 +17,6 @@ Data on kickstarter projects since the launch of kickstarter in 2009 till 2018. 
 * Data are attached to color-coded circle elements, similar to the [Obama Budget Proposal](https://archive.nytimes.com/www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html?fbclid=IwAR1Xz3EraH55cscQreC9mkNw3XD3VDGyAjF-7q5Yju2DwEgy1S7_SLkOpsA) example
 * Dynamic sizing and arrangement to reflect relative values
 
-address.
 ### Launch Instructions
 1. Go to [root repository](https://github.com/MaryannFoley/topherlings) and click "Clone or Download" button
 2. Copy the ssh/https link and run `$ git clone <link>`
