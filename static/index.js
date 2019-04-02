@@ -20,8 +20,18 @@ var svg = body.append("svg").attr("height", HEIGHT).attr("width", WIDTH).attr("s
 //     console.log(data);
 
 
-d3.csv(data_sr, function(error, data) {
-    console.log(data);
+d3.csv(data_sr).then(function(data) {
+    // console.log(data);
+
+    categories = [];
+
+    data.forEach(function(d) {
+        if (categories.indexOf(d.main_category) == -1){
+            categories.push(d.main_category)
+        }
+    });
+
+    console.log(categories);
 });
 
     // var max_projects = 0;
