@@ -6,6 +6,7 @@ var svg = body.append("svg")
             .attr("width", WIDTH)
             .attr("height", HEIGHT)
             .attr("class", "bubble")
+            .style("border", "1px solid black");
 
 // [category, project count, funding, backers]
 
