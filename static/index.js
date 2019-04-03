@@ -9,6 +9,15 @@ var svg = body.append("svg")
   .style("border", "1px solid black")
   .attr("id", "svgboi");
 
+svg.append("text")
+  .attr("dy", ".3em")
+  .attr("x", 200)
+  .attr("y", 200)
+  .style("text-anchor", "middle")
+  .style('fill', 'black')
+  .attr("class", "cir_text")
+  .text("Hold up buddy");
+
 // [category, project count, funding, backers]
 
 // d3.csv("kickstarter.csv", function(d) {
@@ -27,12 +36,14 @@ var svg = body.append("svg")
 var hue = 0;
 var hue_step;
 var top_display = "freq";
+var categories = [];
 
 var changeDisplay = function (new_state) {
+  hue = 0;
   document.getElementById("svgboi").innerHTML = "";
   console.log("clicked");
   top_display = new_state;
-  go();
+  makeChart(categories, top_display);
 }
 
 var go = function () {
@@ -45,7 +56,7 @@ var go = function () {
     var cat_backers = [];
     var cat_success = [];
 
-    var categories = [];
+    // var categories = [];
 
     data.forEach(function (d) {
       // total num of projects
@@ -55,11 +66,20 @@ var go = function () {
         //console.log(d.backers);
         cat_backers.push(parseInt(d.backers));
         cat_fund.push(parseFloat(d.usd_pledged_real));
+        console.log(d.state);
+        if ((d.state) == 'successful') {
+          cat_success.push(1);
+        } else {
+          cat_success.push(0);
+        }
       } else {
         cat_freq[cat_holder.indexOf(d.main_category)] += 1;
         //console.log(d.backers);
         cat_backers[cat_holder.indexOf(d.main_category)] += parseInt(d.backers);
         cat_fund[cat_holder.indexOf(d.main_category)] += parseFloat(d.usd_pledged_real);
+        if ((d.state) == 'successful') {
+          cat_success[cat_holder.indexOf(d.main_category)] += 1;
+        }
         //console.log("hat"+cat_backers[cat_holder.indexOf(d.main_category)]);
       }
 
@@ -108,6 +128,9 @@ var makeChart = function (data, thing) {
     .sum(function (d) {
       return d[thing];
     });
+
+  svg.html("");
+
 
   var node = svg.selectAll(".node")
     .data(bubble(nodes).descendants())
