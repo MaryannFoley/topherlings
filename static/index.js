@@ -6,7 +6,6 @@ var svg = body.append("svg")
             .attr("width", WIDTH)
             .attr("height", HEIGHT)
             .attr("class", "bubble")
-            .attr("style", "border: 1px solid black");
 
 // [category, project count, funding, backers]
 
@@ -58,7 +57,7 @@ d3.csv(data_sr).then(function(data) {
 
 var makeChart = function(data) {
 
-    data = {"chilren": data};
+    data = {"children": data};
     console.log(data);
 
     var bubble = d3.pack(data)
@@ -83,13 +82,25 @@ var makeChart = function(data) {
             });
 
     // console.log(node);
-
+    node.append("title")
+            .text(function(d) {
+                // console.log(d);
+                return d.data.name + ": " + d.data.freq;
+            });
 
     node.append("circle")
         .attr("r", function(d) {
                 return d.r;
         })
         .style("fill", "red");
+
+    node.append("text")
+            .attr("dy", ".3em")
+            .style("text-anchor", "middle")
+            .attr("class", "cir_text")
+            .text(function(d) {
+                return d.data.name;
+            });
 };
 
     // var max_projects = 0;

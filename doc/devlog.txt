@@ -35,3 +35,8 @@ joyceL -- 2019-04-02 21:59
 - generated an object ready for packing for categories
 - cannot access radius of circle using d.r
 ==============================================================
+
+joyceL -- 2019-04-03 00:11
+--------------------------------------------------------------
+- basic categories bubble chart working! Only one color though haha
+==============================================================
