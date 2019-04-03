@@ -32,10 +32,14 @@ svg.append("text")
 //     });
 //
 //     console.log(data);
-
 var hue = 0;
 var hue_step;
 var top_display = "freq";
+var cat_holder = [];
+var cat_freq = [];
+var cat_fund = [];
+var cat_backers = [];
+var cat_success = [];
 var categories = [];
 
 var changeDisplay = function (new_state) {
@@ -50,12 +54,6 @@ var go = function () {
   d3.csv(data_sr).then(function (data) {
     // console.log(data);
 
-    var cat_holder = [];
-    var cat_freq = [];
-    var cat_fund = [];
-    var cat_backers = [];
-    var cat_success = [];
-
     // var categories = [];
 
     data.forEach(function (d) {
@@ -66,11 +64,14 @@ var go = function () {
         //console.log(d.backers);
         cat_backers.push(parseInt(d.backers));
         cat_fund.push(parseFloat(d.usd_pledged_real));
-        console.log(d.state);
-        if ((d.state) == 'successful') {
+        // console.log(d);
+        // console.log(d.state === 'failed');
+        if ((d.state) == 'failed') {
           cat_success.push(1);
+          // console.log(cat_success);
         } else {
-          cat_success.push(0);
+          cat_success.push(1);
+          // console.log(cat_success);
         }
       } else {
         cat_freq[cat_holder.indexOf(d.main_category)] += 1;
@@ -82,12 +83,6 @@ var go = function () {
         }
         //console.log("hat"+cat_backers[cat_holder.indexOf(d.main_category)]);
       }
-
-      // Funding
-
-      // number of Backers
-
-      // success rate
     });
 
     cat_holder.forEach(function (d, i) {
@@ -96,7 +91,7 @@ var go = function () {
         freq: cat_freq[i],
         fund: cat_fund[i],
         backers: cat_backers[i],
-        success: 0
+        success: cat_success[i]
       };
       categories.push(new_obj);
     })
@@ -112,11 +107,11 @@ var go = function () {
 }
 
 var makeChart = function (data, thing) {
-
+  console.log(thing);
   data = {
     "children": data
   };
-  console.log(data);
+  // console.log(data);
 
   var bubble = d3.pack(data)
     .size([WIDTH - 2, HEIGHT - 2])
