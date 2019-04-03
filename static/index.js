@@ -6,6 +6,7 @@ var svg = body.append("svg")
             .attr("width", WIDTH)
             .attr("height", HEIGHT)
             .attr("class", "bubble")
+            .style("border", "1px solid black");
 
 // [category, project count, funding, backers]
 
@@ -116,10 +117,7 @@ var makeChart = function(data) {
         })
         .style("fill", function() {
           var c = d3.color("hsl(" + hue + ", 100%, 50%)");
-          console.log("hue: " + hue);
-          console.log("hue step: " + hue_step);
           hue += hue_step;
-          console.log("new hue: " + hue);
           return c;
         });
 
