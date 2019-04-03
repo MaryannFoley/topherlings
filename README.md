@@ -8,14 +8,17 @@ Data on kickstarter projects since the launch of kickstarter in 2009 till 2018. 
 * Kickstarter projects are grouped by categories from which the user can choose to explore in further detail
 * Projects in their respective categories are ranked according to different factors such as amount of money pledged, number of backers, etc
 * Measures of central tendency for the factors mentioned above are calculated as well as mean rate of successfully launching a project
-* Users can navigate among different rankings by clicking on each tab (maybe a navbar) at the top (side?) of the page
-* Different colors are used to indicate if a project was successful, unsuccessful, or canceled
+##### User Interaction
+* Users can navigate through different aspects (funding, num of backers, etc) by clicking on each tab at the top of the page
+* Size of circles change depending on the aspects that the users choose
+* Users click on a specific category to view its projects
 * Users can access information about individual projects including their names, deadlines, target fund amount, currency, and launch date 
-* Our model will help users determine which type(s) of campaigns receive the most support and/or are most likely to be successful
+* Our model will help users to determine which type(s) of campaigns receive the most support and/or are most likely to be successful and to explore what contributes to those trends if there are any
 
 #### D3 Application
 * Data are attached to color-coded circle elements, similar to the [Obama Budget Proposal](https://archive.nytimes.com/www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html?fbclid=IwAR1Xz3EraH55cscQreC9mkNw3XD3VDGyAjF-7q5Yju2DwEgy1S7_SLkOpsA) example
 * Dynamic sizing and arrangement to reflect relative values
+* Data presented as [basic bubble charts](https://observablehq.com/@d3/bubble-chart) or [zoomable bubble charts](https://observablehq.com/@d3/zoomable-circle-packing) if time allows
 
 ### Launch Instructions
 1. Go to [root repository](https://github.com/MaryannFoley/topherlings) and click "Clone or Download" button
