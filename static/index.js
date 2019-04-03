@@ -22,6 +22,8 @@ var svg = body.append("svg")
 //
 //     console.log(data);
 
+var hue = 0;
+var hue_step;
 
 d3.csv(data_sr).then(function(data) {
     // console.log(data);
@@ -49,7 +51,10 @@ d3.csv(data_sr).then(function(data) {
         categories.push(new_obj);
     })
 
-    makeChart(categories);
+    hue_step = 360.0 / (categories.length + 1);
+    console.log("hue step: " + hue_step);
+
+    makeChart(categories, hue_step);
 
     // console.log(cat_holder);
     // console.log(cat_freq);
@@ -93,7 +98,14 @@ var makeChart = function(data) {
         .attr("r", function(d) {
                 return d.r;
         })
-        .style("fill", "red");
+        .style("fill", function() {
+          var c = d3.color("hsl(" + hue + ", 100%, 50%)");
+          console.log("hue: " + hue);
+          console.log("hue step: " + hue_step);
+          hue += hue_step;
+          console.log("new hue: " + hue);
+          return c;
+        });
 
     node.append("text")
             .attr("dy", ".3em")
