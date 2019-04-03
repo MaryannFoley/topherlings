@@ -2,7 +2,11 @@ let HEIGHT = 600;
 let WIDTH = 800;
 
 var body = d3.select("body");
-var svg = body.append("svg").attr("height", HEIGHT).attr("width", WIDTH).attr("style", "border: 1px solid black");
+var svg = body.append("svg")
+            .attr("width", WIDTH)
+            .attr("height", HEIGHT)
+            .attr("class", "bubble")
+            .attr("style", "border: 1px solid black");
 
 // [category, project count, funding, backers]
 
@@ -23,16 +27,70 @@ var svg = body.append("svg").attr("height", HEIGHT).attr("width", WIDTH).attr("s
 d3.csv(data_sr).then(function(data) {
     // console.log(data);
 
-    categories = [];
+    var cat_holder = [];
+    var cat_freq = [];
+    var categories = [];
 
     data.forEach(function(d) {
-        if (categories.indexOf(d.main_category) == -1){
-            categories.push(d.main_category)
+        if (cat_holder.indexOf(d.main_category) == -1){
+            cat_holder.push(d.main_category);
+            cat_freq.push(1);
+        }
+        else {
+            cat_freq[cat_holder.indexOf(d.main_category)] += 1;
         }
     });
 
-    console.log(categories);
+    cat_holder.forEach(function(d, i) {
+        var new_obj = {
+            name: d,
+            freq: cat_freq[i]
+        };
+        categories.push(new_obj);
+    })
+
+    makeChart(categories);
+
+    // console.log(cat_holder);
+    // console.log(cat_freq);
+    // console.log(categories);
 });
+
+var makeChart = function(data) {
+
+    data = {"chilren": data};
+    console.log(data);
+
+    var bubble = d3.pack(data)
+                    .size([WIDTH-2, HEIGHT-2])
+                    .padding(1.5);;
+
+    // console.log(bubble);
+
+    var nodes = d3.hierarchy(data)
+            .sum(function(d) { return d.freq; });
+
+    var node = svg.selectAll(".node")
+            .data(bubble(nodes).descendants())
+            .enter()
+            .filter(function(d){
+                return  !d.children
+            })
+            .append("g")
+            .attr("class", "node")
+            .attr("transform", function(d) {
+                return "translate(" + d.x + "," + d.y + ")";
+            });
+
+    // console.log(node);
+
+
+    node.append("circle")
+        .attr("r", function(d) {
+                return d.r;
+        })
+        .style("fill", "red");
+};
 
     // var max_projects = 0;
     // var max_funding = 0;
