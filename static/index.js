@@ -34,6 +34,7 @@ d3.csv(data_sr).then(function(data) {
     var categories = [];
 
     data.forEach(function(d) {
+        // total num of projects
         if (cat_holder.indexOf(d.main_category) == -1){
             cat_holder.push(d.main_category);
             cat_freq.push(1);
@@ -41,13 +42,21 @@ d3.csv(data_sr).then(function(data) {
         else {
             cat_freq[cat_holder.indexOf(d.main_category)] += 1;
         }
+
+        // Funding
+
+        // number of Backers
+
+        // success rate
     });
 
     cat_holder.forEach(function(d, i) {
         var new_obj = {
             name: d,
             freq: cat_freq[i],
-            value:cat_freq[i]
+            fund: 0,
+            backers: 0,
+            success: 0
         };
         categories.push(new_obj);
     })
