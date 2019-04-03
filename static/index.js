@@ -25,6 +25,12 @@ var svg = body.append("svg")
 
 var hue = 0;
 var hue_step;
+var top_display="freq";
+
+var changeDisplay = function (new_state) {
+  top_display=new_state;
+  makeChart(categories,top_display);
+}
 
 d3.csv(data_sr).then(function(data) {
     // console.log(data);
@@ -42,14 +48,16 @@ d3.csv(data_sr).then(function(data) {
         if (cat_holder.indexOf(d.main_category) == -1){
             cat_holder.push(d.main_category);
             cat_freq.push(1);
-            console.log(d.backers);
-            cat_backers.push(d.backers);
-
+            //console.log(d.backers);
+            cat_backers.push(parseInt(d.backers));
+            cat_fund.push(parseFloat(d.usd_pledged_real));
         }
         else {
             cat_freq[cat_holder.indexOf(d.main_category)] += 1;
-            console.log(d.backers);
-            cat_backers[cat_holder.indexOf(d.main_category)] += Number(d.backers);
+            //console.log(d.backers);
+            cat_backers[cat_holder.indexOf(d.main_category)] += parseInt(d.backers);
+            cat_fund[cat_holder.indexOf(d.main_category)]+=parseFloat(d.usd_pledged_real);
+            //console.log("hat"+cat_backers[cat_holder.indexOf(d.main_category)]);
         }
 
         // Funding
@@ -63,7 +71,7 @@ d3.csv(data_sr).then(function(data) {
         var new_obj = {
             name: d,
             freq: cat_freq[i],
-            fund: 0,
+            fund: cat_fund[i],
             backers: cat_backers[i],
             success: 0
         };
@@ -71,16 +79,15 @@ d3.csv(data_sr).then(function(data) {
     })
 
     hue_step = 360.0 / (categories.length + 1);
-    console.log("hue step: " + hue_step);
 
-    makeChart(categories, hue_step);
+    makeChart(categories,"freq");
 
     // console.log(cat_holder);
     // console.log(cat_freq);
     // console.log(categories);
 });
 
-var makeChart = function(data) {
+var makeChart = function(data,thing) {
 
     data = {"children": data};
     console.log(data);
@@ -92,7 +99,7 @@ var makeChart = function(data) {
     // console.log(bubble);
 
     var nodes = d3.hierarchy(data)
-            .sum(function(d) { return d.freq; });
+            .sum(function(d) { return d[thing]; });
 
     var node = svg.selectAll(".node")
             .data(bubble(nodes).descendants())
@@ -131,6 +138,7 @@ var makeChart = function(data) {
                 return d.data.name;
             });
 };
+
 
     // var max_projects = 0;
     // var max_funding = 0;
