@@ -125,7 +125,7 @@ var makeChart = function(data,thing) {
                 return d.r;
         })
         .style("fill", function() {
-          var c = d3.color("hsl(" + hue + ", 100%, 50%)");
+          var c = d3.color("hsl(" + hue + ", 90%, 50%)");
           hue += hue_step;
           return c;
         });
@@ -134,6 +134,7 @@ var makeChart = function(data,thing) {
             .attr("dy", ".3em")
             .style("text-anchor", "middle")
             .attr("class", "cir_text")
+            .attr("textLength", function(d) {return 1.7*d.r})
             .text(function(d) {
                 return d.data.name;
             });
