@@ -14,16 +14,16 @@
 
   <div class="btn-group btn-toolbar btn-group-toggle" data-toggle="buttons" role="toolbar">
     <label class="btn btn-secondary active">
-      <input type="radio" name="options" id="num_projects" autocomplete="off" checked>Number of Projects
+      <input type="radio" name="options" id="num_projects" autocomplete="off" onclick="changeDisplay('freq')" checked>Number of Projects
     </label>
     <label class="btn btn-secondary">
-      <input type="radio" name="options" id="funding" autocomplete="off">Total Funding
+      <input type="radio" name="options" id="funding" autocomplete="off" onclick="changeDisplay('fund')">Total Funding
     </label>
     <label class="btn btn-secondary">
-      <input type="radio" name="options" id="num_backers" autocomplete="off">Number of Backers
+      <input type="radio" name="options" id="num_backers" autocomplete="off" onclick="changeDisplay('backers')">Number of Backers
     </label>
     <label class="btn btn-secondary">
-      <input type="radio" name="options" id="succes" autocomplete="off">Success Rate
+      <input type="radio" name="options" id="succes" autocomplete="off" onclick="changeDisplay('success')">Success Rate
     </label>
   </div>
 
