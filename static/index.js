@@ -30,6 +30,10 @@ d3.csv(data_sr).then(function(data) {
 
     var cat_holder = [];
     var cat_freq = [];
+    var cat_fund = [];
+    var cat_backers = [];
+    var cat_success = [];
+
     var categories = [];
 
     data.forEach(function(d) {
@@ -37,9 +41,12 @@ d3.csv(data_sr).then(function(data) {
         if (cat_holder.indexOf(d.main_category) == -1){
             cat_holder.push(d.main_category);
             cat_freq.push(1);
+            cat_backers.push(d.backers);
+
         }
         else {
             cat_freq[cat_holder.indexOf(d.main_category)] += 1;
+            cat.backers[cat_holder.indexOf(d.main_category)] += d.backers;
         }
 
         // Funding
