@@ -110,10 +110,7 @@ var makeChart = function(data) {
         })
         .style("fill", function() {
           var c = d3.color("hsl(" + hue + ", 100%, 50%)");
-          console.log("hue: " + hue);
-          console.log("hue step: " + hue_step);
           hue += hue_step;
-          console.log("new hue: " + hue);
           return c;
         });
 
