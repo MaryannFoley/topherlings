@@ -44,7 +44,8 @@ d3.csv(data_sr).then(function(data) {
     cat_holder.forEach(function(d, i) {
         var new_obj = {
             name: d,
-            freq: cat_freq[i]
+            freq: cat_freq[i],
+            value:cat_freq[i]
         };
         categories.push(new_obj);
     })
