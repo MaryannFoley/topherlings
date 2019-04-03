@@ -42,12 +42,14 @@ d3.csv(data_sr).then(function(data) {
         if (cat_holder.indexOf(d.main_category) == -1){
             cat_holder.push(d.main_category);
             cat_freq.push(1);
+            console.log(d.backers);
             cat_backers.push(d.backers);
 
         }
         else {
             cat_freq[cat_holder.indexOf(d.main_category)] += 1;
-            cat_backers[cat_holder.indexOf(d.main_category)] += d.backers;
+            console.log(d.backers);
+            cat_backers[cat_holder.indexOf(d.main_category)] += Number(d.backers);
         }
 
         // Funding
@@ -62,7 +64,7 @@ d3.csv(data_sr).then(function(data) {
             name: d,
             freq: cat_freq[i],
             fund: 0,
-            backers: 0,
+            backers: cat_backers[i],
             success: 0
         };
         categories.push(new_obj);
