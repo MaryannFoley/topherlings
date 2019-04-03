@@ -47,7 +47,7 @@ d3.csv(data_sr).then(function(data) {
         }
         else {
             cat_freq[cat_holder.indexOf(d.main_category)] += 1;
-            cat.backers[cat_holder.indexOf(d.main_category)] += d.backers;
+            cat_backers[cat_holder.indexOf(d.main_category)] += d.backers;
         }
 
         // Funding
