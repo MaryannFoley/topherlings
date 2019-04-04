@@ -2,3 +2,11 @@
     fill: white;
     font: bold 10px sans-serif;
 }
+
+.btn {
+  width: 25%;
+}
+
+.container-fluid {
+  width: 100%;
+}

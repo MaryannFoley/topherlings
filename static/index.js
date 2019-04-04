@@ -1,5 +1,5 @@
-let HEIGHT = 600;
-let WIDTH = 800;
+let HEIGHT = 750;
+let WIDTH = 900;
 
 var body = d3.select("body");
 var svg = body.append("svg")
