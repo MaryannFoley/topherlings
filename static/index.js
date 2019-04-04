@@ -143,7 +143,15 @@ var makeChart = function (data, thing) {
   node.append("title")
     .text(function (d) {
       // console.log(d);
-      return d.data.name + ": " + d.data.freq;
+      if (thing == "fund"){
+          return d.data.name + ": $" + Math.floor(d.data[thing]);
+      }
+      else if (thing == "success") {
+        return d.data.name + ": " + Math.floor(100*d.data["success"]/d.data["freq"])+"%";
+      }
+      else{
+          return d.data.name + ": " + Math.floor(d.data[thing]);
+      }
     });
 
   node.append("circle")
@@ -162,6 +170,7 @@ var makeChart = function (data, thing) {
     .style('fill', 'black')
     .attr("class", "cir_text")
     .text(function (d) {
+      //return "hat";
       return d.data.name;
     });
   // this makes the text wEird
