@@ -8,23 +8,35 @@
   <link href="../static/index.css" type="text/css" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <!-- <link href="{{url_for('static', filename='index.css')}}"> -->
+
+  <style>
+    .btn {
+      width: 25%;
+    }
+
+    .container-fluid {
+      width: 100%;
+    }
+  </style>
 </head>
 
 <body>
-
-  <div class="btn-group btn-toolbar btn-group-toggle" data-toggle="buttons" role="toolbar">
-    <label class="btn btn-info active" onclick=" changeDisplay('freq');">
+  <div class="container-fluid">
+    <div class="btn-group btn-toolbar btn-group-toggle" data-toggle="buttons" role="toolbar">
+      <label class="btn btn-info active" onclick=" changeDisplay('freq');">
       <input type="radio" name="options" id="num_projects" autocomplete="off" checked>Number of Projects
     </label>
-    <label class="btn btn-info " onclick="changeDisplay( 'fund'); ">
+      <label class="btn btn-info " onclick="changeDisplay( 'fund'); ">
       <input type="radio" name="options" id="funding" autocomplete="off">Total Funding
     </label>
-    <label class="btn btn-info " onclick="changeDisplay( 'backers'); ">
+      <label class="btn btn-info " onclick="changeDisplay( 'backers'); ">
       <input type="radio" name="options" id="num_backers" autocomplete="off" >Number of Backers
     </label>
-    <label class="btn btn-info " onclick="changeDisplay( 'success'); ">
+      <label class="btn btn-info " onclick="changeDisplay( 'success'); ">
       <input type="radio" name="options" id="success" autocomplete="off" >Success Rate
     </label>
+    </div>
+
   </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js " integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo " crossorigin="anonymous "></script>
@@ -34,7 +46,6 @@
   <script src="https://d3js.org/d3-color.v1.min.js "></script>
   <script>
     let data_sr = "{{data}} ";
-
   </script>
   <script src="../static/index.js "></script>
   <!-- <script src="{{url_for( 'static', filename='index.js' )}} "></script> -->
