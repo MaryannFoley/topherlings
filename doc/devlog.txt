@@ -41,6 +41,12 @@ joyceL -- 2019-04-03 00:11
 - basic categories bubble chart working! Only one color though haha
 ==============================================================
 
+foleyM -- 2019-04-03 12:40
+--------------------------------------------------------------
+- Make it so that categories only has to be generated once
+- Create function that allows input of a desired sorting method
+==============================================================
+
 joanC -- 2019-04-03 14:13
 --------------------------------------------------------------
 - Fixed buttons on site
