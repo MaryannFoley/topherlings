@@ -42,6 +42,8 @@ var cat_backers = [];
 var cat_success = [];
 var categories = [];
 
+var sorted_fund = [];
+
 var changeDisplay = function (new_state) {
   hue = 0;
   document.getElementById("svgboi").innerHTML = "";
@@ -53,8 +55,8 @@ var changeDisplay = function (new_state) {
 var go = function () {
   d3.csv(data_sr).then(function (data) {
     // console.log(data);
-
-    // var categories = [];
+    sorted_fund = data.concat().sort(function(a,b) { return parseFloat(a.usd_pledged_real) - parseFloat(b.usd_pledged_real);});
+    // console.log(sorted_fund);
 
     data.forEach(function (d) {
       // total num of projects
