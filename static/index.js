@@ -1,5 +1,5 @@
-let HEIGHT = 750;
-let WIDTH = 900;
+let HEIGHT = 600;
+let WIDTH = 800;
 
 var body = d3.select("body");
 var svg = body.append("svg")
@@ -42,8 +42,6 @@ var cat_backers = [];
 var cat_success = [];
 var categories = [];
 
-var sorted_fund = [];
-
 var changeDisplay = function (new_state) {
   hue = 0;
   document.getElementById("svgboi").innerHTML = "";
@@ -55,11 +53,13 @@ var changeDisplay = function (new_state) {
 var go = function () {
   d3.csv(data_sr).then(function (data) {
     // console.log(data);
-    sorted_fund = data.concat().sort(function(a,b) { return parseFloat(a.usd_pledged_real) - parseFloat(b.usd_pledged_real);});
-    // console.log(sorted_fund);
+
+    // var categories = [];
+
 
     data.forEach(function (d) {
       // total num of projects
+      //category does not exist
       if (cat_holder.indexOf(d.main_category) == -1) {
         cat_holder.push(d.main_category);
         cat_freq.push(1);
@@ -139,7 +139,7 @@ var makeChart = function (data, thing) {
     .attr("class", "node")
     .attr("transform", function (d) {
       return "translate(" + d.x + "," + d.y + ")";
-    });
+    })
 
   // console.log(node);
   node.append("title")
@@ -164,7 +164,15 @@ var makeChart = function (data, thing) {
       var c = d3.color("hsl(" + hue + ", 90%, 50%)");
       hue += hue_step;
       return c;
-    });
+    })
+    .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
+    .on("mouseout", function() { d3.select(this).attr("stroke", null); })
+    .on("click", () => console.log("hello"));
+
+
+
+
+
 
   node.append("text")
     .attr("dy", ".3em")
@@ -175,6 +183,8 @@ var makeChart = function (data, thing) {
       //return "hat";
       return d.data.name;
     });
+
+
   // this makes the text wEird
   //    .attr("textLength", function (d) {
   //      return 1.7 * d.r
@@ -183,6 +193,7 @@ var makeChart = function (data, thing) {
 
 
 go();
+
 
 // var max_projects = 0;
 // var max_funding = 0;
