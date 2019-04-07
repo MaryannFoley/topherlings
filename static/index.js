@@ -40,9 +40,11 @@ var cat_freq = [];
 var cat_fund = [];
 var cat_backers = [];
 var cat_success = [];
+var subcat =[];
 var categories = [];
 
 var sorted_fund = [];
+var sorted_backers = [];
 
 var changeDisplay = function (new_state) {
   hue = 0;
@@ -56,7 +58,9 @@ var go = function () {
   d3.csv(data_sr).then(function (data) {
     // console.log(data);
     sorted_fund = data.concat().sort(function(a,b) { return parseFloat(a.usd_pledged_real) - parseFloat(b.usd_pledged_real);});
-     // console.log(sorted_fund);
+    sorted_backers = data.concat().sort(function(a,b) { return parseInt(a.backers) - parseInt(b.backers);});
+    // console.log(sorted_fund);
+    // console.log(sorted_backers);
 
     // var categories = [];
 
@@ -66,6 +70,7 @@ var go = function () {
       //category does not exist
       if (cat_holder.indexOf(d.main_category) == -1) {
         cat_holder.push(d.main_category);
+        subcat.push([d.category]);
         cat_freq.push(1);
         //console.log(d.backers);
         cat_backers.push(parseInt(d.backers));
@@ -80,12 +85,21 @@ var go = function () {
           // console.log(cat_success);
         }
       } else {
-        cat_freq[cat_holder.indexOf(d.main_category)] += 1;
-        //console.log(d.backers);
-        cat_backers[cat_holder.indexOf(d.main_category)] += parseInt(d.backers);
-        cat_fund[cat_holder.indexOf(d.main_category)] += parseFloat(d.usd_pledged_real);
-        if ((d.state) == 'successful') {
-          cat_success[cat_holder.indexOf(d.main_category)] += 1;
+
+            var cat_index = cat_holder.indexOf(d.main_category);
+
+            if (subcat[cat_index].indexOf(d.category) == -1) {
+                subcat[cat_index].push([d.category]);
+            }
+
+            var subcat_index = subcat[cat_index].indexOf(d.category);
+
+            cat_freq[cat_holder.indexOf(d.main_category)] += 1;
+            //console.log(d.backers);
+            cat_backers[cat_holder.indexOf(d.main_category)] += parseInt(d.backers);
+            cat_fund[cat_holder.indexOf(d.main_category)] += parseFloat(d.usd_pledged_real);
+            if ((d.state) == 'successful') {
+              cat_success[cat_holder.indexOf(d.main_category)] += 1;
         }
         //console.log("hat"+cat_backers[cat_holder.indexOf(d.main_category)]);
       }
