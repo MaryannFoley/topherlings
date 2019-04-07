@@ -7,7 +7,8 @@ var svg = body.append("svg")
 .attr("height", HEIGHT)
 .attr("class", "bubble")
 .style("border", "1px solid black")
-.attr("id", "svgboi");
+.attr("id", "svgboi")
+.attr("viewBox", "0 0 " + WIDTH + " " + HEIGHT);
 
 svg.append("text")
 .attr("dy", ".3em")
@@ -199,7 +200,7 @@ var makeChart = function (data, thing) {
         .attr("pointer-events", d => !d.children ? "none" : null)
         .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
         .on("mouseout", function() { d3.select(this).attr("stroke", null); })
-        // .on("click", d => focus !== d && (zoom(d), d3.event.stopPropagation()));
+        .on("click", d => focus !== d && (zoom(d), d3.event.stopPropagation()));
 
     node.append("title")
     .text(function (d) {
@@ -226,6 +227,40 @@ var makeChart = function (data, thing) {
         .style("display", d => d.parent === bubble(nodes) ? "inline" : "none")
         .text(d => d.data.name);
         label.attr("transform", d => "translate(" + d.x + "," + d.y + ")");
+
+    var view = [bubble(nodes).x, bubble(nodes).y, bubble(nodes).r * 2]
+
+    function zoomTo(v) {
+        const k = (WIDTH  / 2) / v[2];
+
+        // console.log(k);
+        view = v;
+
+        label.attr("transform", d => "translate(" + d.x + "," + d.y + ")");
+        node.attr("transform", d => "translate(" + d.x + "," + d.y + ")");
+        node.attr("r", d => d.r);
+    }
+
+    function zoom(d) {
+        const focus0 = focus;
+
+        focus = d;
+
+        const transition = svg.transition()
+            .duration(d3.event.altKey ? 7500 : 750)
+            .tween("zoom", d => {
+              const i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2]);
+              return t => zoomTo(i(t));
+            });
+
+        label
+          .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+          .transition(transition)
+            .style("fill-opacity", d => d.parent === focus ? 1 : 0)
+            .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+            .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
+    }
+
 
 };
 

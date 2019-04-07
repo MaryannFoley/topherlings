@@ -75,3 +75,9 @@ joyceL -- 2019-04-07 14:43
 - restructured object array to pack circles
 - display second layer of bubble chart, no zoom yet
 ==============================================================
+
+joyceL -- 2019-04-07 15:50
+--------------------------------------------------------------
+- displays subcats on click
+- zoom does not work :(
+==============================================================
