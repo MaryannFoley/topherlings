@@ -19,7 +19,7 @@ svg.append("text")
 .text("Hold up buddy");
 
 // colors
-var hue = 0;
+var hue = 145;
 var hue_step;
 
 // main cats
@@ -31,7 +31,7 @@ var cat_backers = [];
 var cat_success = [];
 
 // sub cats
-var subcat_holder = [];
+var subcat = [];
 var subcat_freq = [];
 var subcat_fund = [];
 var subcat_backers = [];
@@ -46,7 +46,7 @@ var categories = [];
 
 
 var changeDisplay = function (new_state) {
-    hue = 0;
+    hue = 145;
     document.getElementById("svgboi").innerHTML = "";
     console.log("clicked");
     top_display = new_state;
@@ -86,19 +86,19 @@ var go = function () {
 
                 // new subcat
                 if (subcat[cat_index].indexOf(d.category) == -1) {
-                    subcat[cat_index].push([d.category]);
-                    subcat_freq[cat_index].push([1]);
-                    subcat_backers[cat_index].push([parseInt(d.backers)]);
-                    subcat_fund[cat_index].push([parseFloat(d.usd_pledged_real)]);
-                    subcat_success[cat_index].push([1]);
+                    subcat[cat_index].push(d.category);
+                    subcat_freq[cat_index].push(1);
+                    subcat_backers[cat_index].push(parseInt(d.backers));
+                    subcat_fund[cat_index].push(parseFloat(d.usd_pledged_real));
+                    subcat_success[cat_index].push(1);
 
                 } else { // modify subcat
 
                     var subcat_index = subcat[cat_index].indexOf(d.category);
 
                     subcat_freq[cat_index][subcat_index] += 1;
-                    subcat_backers[cat_index][subcat_index].push(parseInt(d.backers));
-                    subcat_fund[cat_index][subcat_index].push(parseFloat(d.usd_pledged_real));
+                    subcat_backers[cat_index][subcat_index] += parseInt(d.backers);
+                    subcat_fund[cat_index][subcat_index] += parseFloat(d.usd_pledged_real);
                     if ((d.state) == 'successful') {
                         subcat_success[cat_index][subcat_index] += 1;
                     }
@@ -110,32 +110,50 @@ var go = function () {
                 cat_fund[cat_index] += parseFloat(d.usd_pledged_real);
                 if ((d.state) == 'successful') {
                     cat_success[cat_index] += 1;
+                }
             }
         });
 
-        cat_holder.forEach(function (d, i) {
-            var new_obj = {
+        // console.log(subcat);
+        // console.log(subcat_freq);
+        // console.log(cat_holder);
+        // console.log(cat_fund);
+
+        cat_holder.forEach(function (d, cat_i) {
+            var new_cat = {
                 name: d,
-                freq: cat_freq[i],
-                fund: cat_fund[i],
-                backers: cat_backers[i],
-                success: cat_success[i]
+                freq: cat_freq[cat_i],
+                fund: cat_fund[cat_i],
+                backers: cat_backers[cat_i],
+                success: cat_success[cat_i],
+                children: []
             };
-            categories.push(new_obj);
+
+            subcat[cat_i].forEach(function(d, subcat_i) {
+                var new_subcat = {
+                    name: d,
+                    freq: subcat_freq[cat_i][subcat_i],
+                    fund: subcat_fund[cat_i][subcat_i],
+                    backers: subcat_backers[cat_i][subcat_i],
+                    success: subcat_freq[cat_i][subcat_i]
+                }
+                new_cat["children"].push(new_subcat);
+            })
+            categories.push(new_cat);
         })
 
-        hue_step = 360.0 / (categories.length + 1);
+        hue_step = 25.0 / (categories.length + 1);
+
+        console.log(categories);
 
         makeChart(categories, top_display);
 
-        // console.log(cat_holder);
-        // console.log(cat_freq);
-        // console.log(categories);
     });
 }
 
 var makeChart = function (data, thing) {
-    console.log(thing);
+    // console.log(data);
+    // console.log(thing);
     data = {
         "children": data
     };
@@ -143,30 +161,46 @@ var makeChart = function (data, thing) {
 
     var bubble = d3.pack(data)
     .size([WIDTH - 2, HEIGHT - 2])
-    .padding(1.5);;
+    .padding(3);;
 
     // console.log(bubble);
 
     var nodes = d3.hierarchy(data)
     .sum(function (d) {
         return d[thing];
-    });
+    })
+    .sort((a, b) => b[thing] - a[thing]);
 
     svg.html("");
 
-    var node = svg.selectAll(".node")
-    .data(bubble(nodes).descendants())
-    .enter()
-    .filter(function (d) {
-        return !d.children
-    })
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", function (d) {
-        return "translate(" + d.x + "," + d.y + ")";
-    })
 
-    // console.log(node);
+    // var color = d3.scaleLinear()
+    // .domain([0, categories.length + 1])
+    // .range(["hsl(0,80%,80%)", "hsl(100,90%,50%)"])
+    // .interpolate(d3.interpolateHcl)
+
+    var color = function () {
+        var c = d3.color("hsl(" + hue + ", 80%, 80%)");
+        hue += hue_step;
+        return c;
+    };
+
+    const node = svg.append("g")
+        .selectAll("circle")
+        .data(bubble(nodes).descendants().slice(1))
+        .join("circle")
+        .attr("r", function (d) {
+            return d.r;
+        })
+        .attr("transform", function (d) {
+            return "translate(" + d.x + "," + d.y + ")";
+        })
+        .attr("fill", d => d.children ? color(d.depth) : "hsl(160, 100%, 98%)")
+        .attr("pointer-events", d => !d.children ? "none" : null)
+        .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
+        .on("mouseout", function() { d3.select(this).attr("stroke", null); })
+        // .on("click", d => focus !== d && (zoom(d), d3.event.stopPropagation()));
+
     node.append("title")
     .text(function (d) {
         // console.log(d);
@@ -181,28 +215,18 @@ var makeChart = function (data, thing) {
         }
     });
 
-    node.append("circle")
-    .attr("r", function (d) {
-        return d.r;
-    })
-    .style("fill", function () {
-        var c = d3.color("hsl(" + hue + ", 90%, 50%)");
-        hue += hue_step;
-        return c;
-    })
-    .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
-    .on("mouseout", function() { d3.select(this).attr("stroke", null); })
-    .on("click", () => console.log("hello"));
+    const label = svg.append("g")
+        .style("font", "15px sans-serif")
+        .attr("pointer-events", "none")
+        .attr("text-anchor", "middle")
+        .selectAll("text")
+        .data(bubble(nodes).descendants())
+        .join("text")
+        .style("fill-opacity", d => d.parent === bubble(nodes) ? 1 : 0)
+        .style("display", d => d.parent === bubble(nodes) ? "inline" : "none")
+        .text(d => d.data.name);
+        label.attr("transform", d => "translate(" + d.x + "," + d.y + ")");
 
-    node.append("text")
-    .attr("dy", ".3em")
-    .style("text-anchor", "middle")
-    .style('fill', 'black')
-    .attr("class", "cir_text")
-    .text(function (d) {
-        //return "hat";
-        return d.data.name;
-    });
 };
 
 go();

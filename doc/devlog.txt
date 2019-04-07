@@ -68,3 +68,10 @@ joyceL -- 2019-04-04 15:21
 --------------------------------------------------------------
 - Sorting by amount of funding works
 ==============================================================
+
+joyceL -- 2019-04-07 14:43
+--------------------------------------------------------------
+- list sorted by funding + backers
+- restructured object array to pack circles
+- display second layer of bubble chart, no zoom yet
+==============================================================
