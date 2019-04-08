@@ -38,8 +38,8 @@ var subcat_fund = [];
 var subcat_backers = [];
 var subcat_success = [];
 
-var subcat_topfund = [];
-var subcat_topbackers=[];
+var subcat_topfund = {};
+var subcat_topbackers={};
 
 // sorted master lists
 var sorted_fund = [];
@@ -65,8 +65,8 @@ var go = function () {
         sorted_backers = data.concat().sort(function(a,b) { return parseInt(a.backers) - parseInt(b.backers);});
         sorted_fund.reverse();
         sorted_backers.reverse();
-        // console.log(sorted_fund);
-        // console.log(sorted_backers);
+         // console.log(sorted_fund);
+         // console.log(sorted_backers);
 
         data.forEach(function (d) {
             // category does not exist
@@ -88,22 +88,31 @@ var go = function () {
                 temp2=[];
                 ind1=0;
                 ind2=0;
-                for (step=1;step<=10 && step<=sorted_fund.length;step++){
-                  //!!!!!!!!!!!
-                  //!!!!!!!!!!!
-                  //temp1.push(sorted_fund[sorted_fund.slice(ind1).indexOf(d.category)]);
-                  //temp2.push(sorted_backers[sorted_backers.slice(ind2).indexOf(d.category)]);
-                  //!!!!!!!!!!!
-                  //!!!!!!!!!!!
+                for (i=0, step=1;step<=10 && i<=sorted_fund.length;i++){
+                    //console.log(sorted_fund[i]);
+                    if (sorted_fund[i]["category"] == d.category) {
+                        temp1.push(sorted_fund[i]);
+                        step+=1;
+                    }
                 }
-                subcat_topfund.push([temp1]);
-                subcat_topbackers.push([temp2]);
+                for (i=0, step=1;step<=10 && i<=sorted_backers.length;i++){
+                    //console.log(sorted_fund[i]);
+                    if (sorted_backers[i]["category"] == d.category) {
+                        temp2.push(sorted_backers[i]);
+                        step+=1;
+                    }
+                }
+                console.log(temp1);
+                subcat_topfund[d.main_category]=[temp1];
+                //console.log(subcat_topfund);
+                subcat_topbackers[d.main_category]=[temp2];
+                //console.log(subcat_topbackers);
                 subcat_success.push([1]);
             } else {
 
                 var cat_index = cat_holder.indexOf(d.main_category);
 
-                // new subcat
+                // new subcat if it doesn't exist
                 if (subcat[cat_index].indexOf(d.category) == -1) {
                     subcat[cat_index].push(d.category);
                     subcat_freq[cat_index].push(1);
@@ -112,16 +121,38 @@ var go = function () {
                     subcat_success[cat_index].push(1);
                     temp1=[];
                     temp2=[];
-                    for (step=1;step<=10 && step<=sorted_fund.length;step++){
-                      //!!!!!!!!!!!
-                      //!!!!!!!!!!!
-                      //temp1.push(sorted_fund[sorted_fund.slice(ind1).indexOf(d.category)]);
-                      //temp2.push(sorted_fund[sorted_fund.slice(ind1).indexOf(d.category)]);
-                      //!!!!!!!!!!!
-                      //!!!!!!!!!!!
+                    // for (step=1;step<=10 && step<=sorted_fund.length;step++){
+                    //   //!!!!!!!!!!!
+                    //   //!!!!!!!!!!!
+                    //   temp1.push(sorted_fund[sorted_fund.slice(ind1).indexOf(d.category)]);
+                    //   temp2.push(sorted_fund[sorted_fund.slice(ind1).indexOf(d.category)]);
+                    //   //!!!!!!!!!!!
+                    //   //!!!!!!!!!!!
+                    // }
+                    // subcat_topfund[cat_index].push(temp1);
+                    // subcat_topbackers[cat_index].push(temp2);
+                    //console.log(subcat_topbackers);
+                    for (i=0, step=1;step<=10 && i<=sorted_fund.length;i++){
+                        //console.log(sorted_fund[i]);
+                        if (sorted_fund[i]["category"] == d.category) {
+                            temp1.push(sorted_fund[i]);
+                            step+=1;
+                        }
                     }
-                    subcat_topfund[cat_index].push(temp1);
-                    subcat_topbackers[cat_index].push(temp2);
+                    for (i=0, step=1;step<=10 && i<=sorted_backers.length;i++){
+                        //console.log(sorted_fund[i]);
+                        if (sorted_backers[i]["category"] == d.category) {
+                            temp2.push(sorted_backers[i]);
+                            step+=1;
+                        }
+                    }
+                    // subcat_topfund.push(temp1);
+                    // //console.log(subcat_topfund);
+                    // subcat_topbackers.push(temp2);
+                    subcat_topfund[d.main_category].push(temp1);
+                    //console.log(subcat_topfund);
+                    subcat_topbackers[d.main_category].push(temp2);
+
 
                 } else { // modify subcat
 
@@ -159,17 +190,19 @@ var go = function () {
                 success: cat_success[cat_i],
                 children: []
             };
-
+            var cat = d;
             subcat[cat_i].forEach(function(d, subcat_i) {
+
                 var new_subcat = {
                     name: d,
                     freq: subcat_freq[cat_i][subcat_i],
                     fund: subcat_fund[cat_i][subcat_i],
                     backers: subcat_backers[cat_i][subcat_i],
                     success: subcat_freq[cat_i][subcat_i],
-                    topFund: subcat_topfund[cat_i][subcat_i],
-                    topBack: subcat_topbackers[cat_i][subcat_i]
+                    topFund: subcat_topfund[cat][subcat_i],
+                    topBack: subcat_topbackers[cat][subcat_i]
                 }
+                //console.log(new_subcat["topFund"])
                 new_cat["children"].push(new_subcat);
             })
             categories.push(new_cat);
@@ -177,7 +210,7 @@ var go = function () {
 
         hue_step = 25.0 / (categories.length + 1);
 
-        console.log(categories);
+        //console.log(categories);
 
         makeChart(categories, top_display);
 
@@ -236,11 +269,21 @@ var makeChart = function (data, thing) {
         .on("click", d => focus !== d && (zoom(d)));
 
     var showInfo = function(e) {
-        // console.log(e);
-        console.log(e.data.name);
+        d3.select(this)
+
+        console.log(e.data)
+        //console.log(e.data.name);
     };
 
-    var sub = d3.selectAll(".sub").on("click", showInfo);
+    var sub = d3.selectAll(".sub")
+        .on("click", showInfo);
+        // .on("click", function() {
+        //     d3.select(this)
+        //
+        // });
+
+        //.on("click", d => console.log(d.children));
+
 
     node.append("title")
     .text(function (d) {
