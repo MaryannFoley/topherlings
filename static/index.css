@@ -1,12 +1,13 @@
-.cir_text{
-    fill: white;
-    font: bold 10px sans-serif;
-}
-
 .btn {
   width: 25%;
 }
 
 .container-fluid {
   width: 100%;
+}
+
+.proj_title{
+  text-align: center;
+  padding: 10px;
+  color: #59a091;
 }
