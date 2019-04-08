@@ -1,4 +1,4 @@
-let HEIGHT = 900;
+let HEIGHT = 800;
 let WIDTH = 900;
 
 var body = d3.select("body");
@@ -102,7 +102,7 @@ var go = function () {
                         step+=1;
                     }
                 }
-                console.log(temp1);
+                // console.log(temp1);
                 subcat_topfund[d.main_category]=[temp1];
                 //console.log(subcat_topfund);
                 subcat_topbackers[d.main_category]=[temp2];
@@ -266,12 +266,13 @@ var makeChart = function (data, thing) {
         .attr("class", d => !d.children ? "sub":"main")
         .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
         .on("mouseout", function() { d3.select(this).attr("stroke", null); })
-        .on("click", d => focus !== d && (zoom(d)));
+        .on("click", d => focus !== d && (zoom(d), d3.event.stopPropagation()));
 
     var showInfo = function(e) {
-        d3.select(this)
+        d3.event.stopPropagation();
+        d3.select(this);
 
-        console.log(e.data)
+        console.log(e.data);
         //console.log(e.data.name);
     };
 
@@ -308,12 +309,41 @@ var makeChart = function (data, thing) {
         .join("text")
         .style("fill-opacity", d => d.parent === bubble(nodes) ? 1 : 0)
         .style("display", d => d.parent === bubble(nodes) ? "inline" : "none")
-        .text(d => d.data.name);
-        label.attr("transform", d => "translate(" + d.x + "," + d.y + ")");
+        .text(d => d.data.name)
+        .attr("transform", d => "translate(" + d.x + "," + d.y + ")");
 
-    var view = [bubble(nodes).x, bubble(nodes).y, bubble(nodes).r * 2]
-    view = [0,0,WIDTH];
+    // var view = [bubble(nodes).x, bubble(nodes).y, bubble(nodes).r * 2]
+    var view = [0,0,WIDTH];
+    var zoomed_in = false;
 
+
+    var zoomOut = function() {
+        console.log(zoomed_in);
+        if (zoomed_in) {
+            node.attr("r", function (d) {
+                return d.r;
+            })
+            .attr("transform", function (d) {
+                return "translate(" + d.x + "," + d.y + ")";
+            })
+            label.attr("transform", d => "translate(" + d.x + "," + d.y + ")")
+            .style("fill-opacity", d => d.parent === bubble(nodes) ? 1 : 0)
+            .style("display", d => d.parent === bubble(nodes) ? "inline" : "none")
+            .text(d => d.data.name);
+            zoomed_in = false;
+            focus = bubble(nodes);
+        }
+    };
+
+    // function shrink(d) {
+    //     const transition = svg.transition()
+    //         .duration(d3.event.altKey ? 7500 : 750)
+    //         .tween("shrink", d => {
+    //           return zoomOut();
+    //       });
+    // };
+
+    svg.on("click", zoomOut);
     //zoomTo(view);
 
     // function zoomTo(v) {
@@ -332,9 +362,10 @@ var makeChart = function (data, thing) {
 
         view = v;
 
-        label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
-        node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+        label.attr("transform", d => `translate(${(d.x - v[0]) * k + 100},${(d.y - v[1]) * k + 100})`);
+        node.attr("transform", d => `translate(${(d.x - v[0]) * k + 100},${(d.y - v[1]) * k + 100})`);
         node.attr("r", d => d.r * k);
+        zoomed_in = true;
     }
 
 
@@ -347,7 +378,7 @@ var makeChart = function (data, thing) {
         const transition = svg.transition()
             .duration(d3.event.altKey ? 7500 : 750)
             .tween("zoom", d => {
-              const i = d3.interpolateZoom(view, [focus.x-75, focus.y-75, focus.r * 3.0]);
+              const i = d3.interpolateZoom(view, [focus.x - 75, focus.y - 75, focus.r * 4.5]);
               return t => zoomTo(i(t));
             });
 
