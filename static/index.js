@@ -19,6 +19,9 @@ svg.append("text")
 .attr("class", "cir_text")
 .text("Hold up buddy");
 
+var tab_container = body.append("div")
+                        .attr("class", "table-container");
+
 // colors
 var hue = 145;
 var hue_step;
@@ -273,18 +276,19 @@ var makeChart = function (data, thing) {
         d3.select(this);
 
         var makeTable = function() {
-            body.append("h4").html("Most backers")
+            tab_container.html("");
+            tab_container.append("h4").html("Most backers")
 
-            var table = body.append("table")
-            .attr("class", "table table-bordered table-hover")
+            var table = tab_container.append("table")
+            .attr("class", "table table-bordered")
             .attr("id", "tableBoi")
             // .style("border","2px solid black")
             .style("text-align","center");
 
-            body.append("h4").html("Most funding")
+            tab_container.append("h4").html("Most funding")
 
-            var table2 = body.append("table")
-            .attr("class", "table table-bordered table-hover")
+            var table2 = tab_container.append("table")
+            .attr("class", "table table-bordered")
             .attr("id", "tableBoi2")
             // .style("border","2px solid black")
             .style("text-align","center");
