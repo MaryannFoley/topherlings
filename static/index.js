@@ -11,18 +11,17 @@ var svg = svgcol.append("svg")
 .attr("width", WIDTH)
 .attr("height", HEIGHT)
 .attr("class", "bubble")
-.style("border", "1px solid black")
+.style("border", "5px dotted #59a091")
 .attr("id", "svgboi")
 .attr("viewBox", "0 0 " + WIDTH + " " + HEIGHT);
 
 svg.append("text")
 .attr("dy", ".3em")
-.attr("x", 200)
-.attr("y", 200)
+.attr("x", WIDTH / 2)
+.attr("y", HEIGHT / 2)
 .style("text-anchor", "middle")
-.style('fill', 'black')
-.attr("class", "cir_text")
-.text("Hold up buddy");
+.attr("class", "load_text")
+.text("Hold up buddy...");
 
 var tab_container = container2.append("div")
                         .attr("class", "col table-container");
@@ -287,7 +286,9 @@ var makeChart = function (data, thing) {
 
         var makeTable = function() {
             tab_container.html("");
-            tab_container.append("h4").html("Most backers").attr("class", "table_heading");
+            tab_container.append("h3").html(e.data.name).attr("class", "cat_heading");
+            tab_container.append("hr");
+            tab_container.append("h4").html("MOST BACKERS").attr("class", "table_heading");
 
             var table = tab_container.append("table")
             .attr("class", "table table-bordered table-sm")
@@ -295,7 +296,7 @@ var makeChart = function (data, thing) {
             // .style("border","2px solid black")
             .style("text-align","center");
             tab2_container.html("");
-            tab2_container.append("h4").html("Most funding").attr("class", "table_heading");
+            tab2_container.append("h4").html("MOST FUNDING").attr("class", "table_heading");
 
             var table2 = tab2_container.append("table")
             .attr("class", "table table-bordered table-sm")
@@ -353,6 +354,8 @@ var makeChart = function (data, thing) {
         .join("text")
         .style("fill-opacity", d => d.parent === bubble(nodes) ? 1 : 0)
         .style("display", d => d.parent === bubble(nodes) ? "inline" : "none")
+        .style("font-size", "13px")
+        .style("fill", "#3f5953")
         .text(d => d.data.name)
         .attr("transform", d => "translate(" + d.x + "," + d.y + ")");
 

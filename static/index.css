@@ -12,6 +12,8 @@
   text-align: center;
   padding: 10px;
   color: #59a091;
+  font-family: 'Fugaz One', cursive;
+  font-size: 50px;
 }
 
 tbody tr:nth-child(even) {
@@ -22,9 +24,28 @@ tbody tr:hover{
     background-color: #f4efff;
 }
 
+td {
+    font-family: 'Forum', cursive;
+    color: #4b6d66;
+}
+
 .table_heading {
     text-align: center;
-    color: #59a091;
     padding: 15px;
-    padding-top: 30px;
+    padding-top: 20px;
+    font-size: 30px;
+    color: #4b6d66;
+    font-family: 'Unica One', cursive;
+}
+
+.cat_heading {
+    font-size: 35px;
+    padding: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.load_text {
+    font-size: 35px;
+    fill: #4b6d66;
 }
