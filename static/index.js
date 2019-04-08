@@ -1,8 +1,12 @@
-let HEIGHT = 800;
-let WIDTH = 900;
+let HEIGHT = 600;
+let WIDTH = 700;
 
 var body = d3.select("body");
-var svg = body.append("svg")
+var container= body.append("div").attr("class","container");
+var container2=container.append("div").attr("class","row");
+
+var svgcol=container2.append("div").attr("class","col");
+var svg = svgcol.append("svg")
 .attr("width", WIDTH)
 .attr("height", HEIGHT)
 .attr("class", "bubble")
@@ -19,8 +23,8 @@ svg.append("text")
 .attr("class", "cir_text")
 .text("Hold up buddy");
 
-var tab_container = body.append("div")
-                        .attr("class", "table-container");
+var tab_container = container2.append("div")
+                        .attr("class", "col table-container");
 
 // colors
 var hue = 145;
