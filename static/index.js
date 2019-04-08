@@ -1,5 +1,5 @@
-let HEIGHT = 600;
-let WIDTH = 800;
+let HEIGHT = 700;
+let WIDTH = 900;
 
 var body = d3.select("body");
 var svg = body.append("svg")
@@ -217,10 +217,18 @@ var makeChart = function (data, thing) {
             return "translate(" + d.x + "," + d.y + ")";
         })
         .attr("fill", d => d.children ? color(d.depth) : "hsl(160, 100%, 98%)")
-        .attr("pointer-events", d => !d.children ? "none" : null)
+        // .attr("pointer-events", d => !d.children ? "none" : null)
+        .attr("class", d => !d.children ? "sub":"main")
         .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
         .on("mouseout", function() { d3.select(this).attr("stroke", null); })
-        .on("click", d => focus !== d && (zoom(d), d3.event.stopPropagation()));
+        .on("click", d => focus !== d && (zoom(d)));
+
+    var showInfo = function(e) {
+        // console.log(e);
+        console.log(e.data.name);
+    };
+
+    var sub = d3.selectAll(".sub").on("click", showInfo);
 
     node.append("title")
     .text(function (d) {
@@ -237,7 +245,7 @@ var makeChart = function (data, thing) {
     });
 
     const label = svg.append("g")
-        .style("font", "15px sans-serif")
+        .style("font", "10px sans-serif")
         .attr("pointer-events", "none")
         .attr("text-anchor", "middle")
         .selectAll("text")
