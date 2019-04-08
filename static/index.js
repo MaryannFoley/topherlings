@@ -280,7 +280,7 @@ var makeChart = function (data, thing) {
             tab_container.append("h4").html("Most backers").attr("class", "table_heading");
 
             var table = tab_container.append("table")
-            .attr("class", "table table-bordered")
+            .attr("class", "table table-bordered table-sm")
             .attr("id", "tableBoi")
             // .style("border","2px solid black")
             .style("text-align","center");
@@ -288,7 +288,7 @@ var makeChart = function (data, thing) {
             tab_container.append("h4").html("Most funding").attr("class", "table_heading");
 
             var table2 = tab_container.append("table")
-            .attr("class", "table table-bordered")
+            .attr("class", "table table-bordered table-sm")
             .attr("id", "tableBoi2")
             // .style("border","2px solid black")
             .style("text-align","center");
