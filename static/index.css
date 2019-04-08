@@ -15,9 +15,15 @@
 }
 
 tbody tr:nth-child(even) {
-    background-color: #a9f2e4;
+    background-color: #c9fff4;
 }
 
 tbody tr:hover{
-    background-color: #eeffd8;
+    background-color: #f4efff;
+}
+
+.table_heading {
+    text-align: center;
+    color: #59a091;
+    padding: 15px;
 }
