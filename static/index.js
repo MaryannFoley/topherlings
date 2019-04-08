@@ -4,6 +4,7 @@ let WIDTH = 700;
 var body = d3.select("body");
 var container= body.append("div").attr("class","container");
 var container2=container.append("div").attr("class","row");
+var container3=container.append("div").attr("class","row");
 
 var svgcol=container2.append("div").attr("class","col");
 var svg = svgcol.append("svg")
@@ -24,6 +25,8 @@ svg.append("text")
 .text("Hold up buddy");
 
 var tab_container = container2.append("div")
+                        .attr("class", "col table-container");
+var tab2_container = container3.append("div")
                         .attr("class", "col table-container");
 
 // colors
@@ -289,9 +292,9 @@ var makeChart = function (data, thing) {
             // .style("border","2px solid black")
             .style("text-align","center");
 
-            tab_container.append("h4").html("Most funding").attr("class", "table_heading");
+            tab2_container.append("h4").html("Most funding").attr("class", "table_heading");
 
-            var table2 = tab_container.append("table")
+            var table2 = tab2_container.append("table")
             .attr("class", "table table-bordered table-sm")
             .attr("id", "tableBoi2")
             // .style("border","2px solid black")
