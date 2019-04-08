@@ -1,4 +1,4 @@
-let HEIGHT = 600;
+let HEIGHT = 650;
 let WIDTH = 700;
 
 var body = d3.select("body");
@@ -208,7 +208,7 @@ var go = function () {
                     freq: subcat_freq[cat_i][subcat_i],
                     fund: subcat_fund[cat_i][subcat_i],
                     backers: subcat_backers[cat_i][subcat_i],
-                    success: subcat_freq[cat_i][subcat_i],
+                    success: subcat_success[cat_i][subcat_i],
                     topFund: subcat_topfund[cat][subcat_i],
                     topBack: subcat_topbackers[cat][subcat_i]
                 }
@@ -278,6 +278,9 @@ var makeChart = function (data, thing) {
         .on("mouseout", function() { d3.select(this).attr("stroke", null); })
         .on("click", d => focus !== d && (zoom(d), d3.event.stopPropagation()));
 
+    var showing_table = false;
+    var zoomed_in = false;
+
     var showInfo = function(e) {
         d3.event.stopPropagation();
         d3.select(this);
@@ -309,10 +312,11 @@ var makeChart = function (data, thing) {
                 theHTML+="<tr><td>"+e.data.topFund[i].name+"</td><td>$"+e.data.topFund[i].usd_pledged_real+"</td><td>"+e.data.topFund[i].backers+"</td></tr>";
             }
             table2.html(theHTML);
+            showing_table = true;
         }
 
         console.log(e.data);
-        makeTable();
+        if (zoomed_in) {makeTable();}
         //console.log(e.data.name);
     };
 
@@ -353,8 +357,8 @@ var makeChart = function (data, thing) {
         .attr("transform", d => "translate(" + d.x + "," + d.y + ")");
 
     // var view = [bubble(nodes).x, bubble(nodes).y, bubble(nodes).r * 2]
-    var view = [0,0,WIDTH];
-    var zoomed_in = false;
+    // var view = [0,0,WIDTH];
+    var view = [WIDTH / 2, HEIGHT / 2,WIDTH];
 
 
     var zoomOut = function() {
@@ -370,8 +374,13 @@ var makeChart = function (data, thing) {
             .style("fill-opacity", d => d.parent === bubble(nodes) ? 1 : 0)
             .style("display", d => d.parent === bubble(nodes) ? "inline" : "none")
             .text(d => d.data.name);
+            d3.selectAll(".table-container").html("");
             zoomed_in = false;
             focus = bubble(nodes);
+        }
+        if (showing_table) {
+            d3.selectAll(".table-container").html("");
+            showing_table = false;
         }
     };
 
@@ -386,16 +395,6 @@ var makeChart = function (data, thing) {
     svg.on("click", zoomOut);
     //zoomTo(view);
 
-    // function zoomTo(v) {
-    //     const k = (WIDTH  / 2) / v[2];
-    //
-    //     // console.log(k);
-    //     view = v;
-    //
-    //     label.attr("transform", d => "translate(" + d.x + "," + d.y + ")");
-    //     node.attr("transform", d => "translate(" + d.x + "," + d.y + ")");
-    //     node.attr("r", d => d.r);
-    // }
 
     function zoomTo(v) {
         const k = WIDTH / v[2];
@@ -418,7 +417,7 @@ var makeChart = function (data, thing) {
         const transition = svg.transition()
             .duration(d3.event.altKey ? 7500 : 750)
             .tween("zoom", d => {
-              const i = d3.interpolateZoom(view, [focus.x - 75, focus.y - 75, focus.r * 4.5]);
+              const i = d3.interpolateZoom(view, [focus.x - 30, focus.y - 30, focus.r * 4]);
               return t => zoomTo(i(t));
             });
 
@@ -434,28 +433,3 @@ var makeChart = function (data, thing) {
 };
 
 go();
-
-
-// var max_projects = 0;
-// var max_funding = 0;
-// var max_backers = 0;
-//
-// for (let item of data) {
-//   if (item[1] > max_projects) max_projects = item[1];
-//   if (item[2] > max_funding) max_funding = item[2];
-//   if (item[3] > max_backers) max_backers = item[3];
-// }
-//
-// var hue = 0;
-// var hue_step = 360.0 / (data.length + 1);
-//
-// for (let item of data) {
-//   var cx = Math.floor(Math.random() * 500);
-//   var cy = Math.floor(Math.random() * 500);
-//   var r = (item[1] / max_projects) * 100;
-//   var c = d3.color("hsl(" + hue + ", 100%, 50%)");
-//   console.log(c);
-//   svg.append("circle").attr("cx", cx).attr("cy", cy).attr("r", r).attr("fill", c.toString());
-//   hue += hue_step;
-//   hue %= 360;
-// }
