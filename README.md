@@ -7,12 +7,13 @@ Data on kickstarter projects since the launch of kickstarter in 2009 till 2018. 
 #### Data Visualization
 * Kickstarter projects are grouped by categories from which the user can choose to explore in further detail
 * Projects in their respective categories are ranked according to different factors such as amount of money pledged, number of backers, etc
-* Measures of central tendency for the factors mentioned above are calculated as well as mean rate of successfully launching a project
+* Projects are sorted by main categories, and then subcategories
+* Mean rate of successfully launching a project in each subcategory is calculated
 ##### User Interaction
 * Users can navigate through different aspects (funding, num of backers, etc) by clicking on each tab at the top of the page
 * Size of circles change depending on the aspects that the users choose
 * Users click on a specific category to view its projects
-* Users can access information about individual projects including their names, deadlines, target fund amount, currency, and launch date 
+* Users can access information about individual projects including their names, funding, and backers
 * Our model will help users to determine which type(s) of campaigns receive the most support and/or are most likely to be successful and to explore what contributes to those trends if there are any
 
 #### D3 Application
