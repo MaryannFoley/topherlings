@@ -63,6 +63,8 @@ var go = function () {
 
         sorted_fund = data.concat().sort(function(a,b) { return parseFloat(a.usd_pledged_real) - parseFloat(b.usd_pledged_real);});
         sorted_backers = data.concat().sort(function(a,b) { return parseInt(a.backers) - parseInt(b.backers);});
+        sorted_fund.reverse();
+        sorted_backers.reverse();
         // console.log(sorted_fund);
         // console.log(sorted_backers);
 
@@ -84,9 +86,15 @@ var go = function () {
                 subcat_fund.push([parseFloat(d.usd_pledged_real)]);
                 temp1=[];
                 temp2=[];
-                for (step=1;step<=10;step++){
-                  temp1.push(sorted_fund[sorted_fund.length-step]);
-                  temp2.push(sorted_backers[sorted_backers.length-step]);
+                ind1=0;
+                ind2=0;
+                for (step=1;step<=10 && step<=sorted_fund.length;step++){
+                  //!!!!!!!!!!!
+                  //!!!!!!!!!!!
+                  //temp1.push(sorted_fund[sorted_fund.slice(ind1).indexOf(d.category)]);
+                  //temp2.push(sorted_backers[sorted_backers.slice(ind2).indexOf(d.category)]);
+                  //!!!!!!!!!!!
+                  //!!!!!!!!!!!
                 }
                 subcat_topfund.push([temp1]);
                 subcat_topbackers.push([temp2]);
@@ -104,9 +112,13 @@ var go = function () {
                     subcat_success[cat_index].push(1);
                     temp1=[];
                     temp2=[];
-                    for (step=1;step<=10;step++){
-                      temp1.push(sorted_fund[sorted_fund.length-step]);
-                      temp2.push(sorted_backers[sorted_backers.length-step]);
+                    for (step=1;step<=10 && step<=sorted_fund.length;step++){
+                      //!!!!!!!!!!!
+                      //!!!!!!!!!!!
+                      //temp1.push(sorted_fund[sorted_fund.slice(ind1).indexOf(d.category)]);
+                      //temp2.push(sorted_fund[sorted_fund.slice(ind1).indexOf(d.category)]);
+                      //!!!!!!!!!!!
+                      //!!!!!!!!!!!
                     }
                     subcat_topfund[cat_index].push(temp1);
                     subcat_topbackers[cat_index].push(temp2);
