@@ -38,6 +38,9 @@ var subcat_fund = [];
 var subcat_backers = [];
 var subcat_success = [];
 
+var subcat_topfund = [];
+var subcat_topbackers=[];
+
 // sorted master lists
 var sorted_fund = [];
 var sorted_backers = [];
@@ -79,8 +82,15 @@ var go = function () {
                 subcat_freq.push([1]);
                 subcat_backers.push([parseInt(d.backers)]);
                 subcat_fund.push([parseFloat(d.usd_pledged_real)]);
+                temp1=[];
+                temp2=[];
+                for (step=1;step<=10;step++){
+                  temp1.push(sorted_fund[sorted_fund.length-step]);
+                  temp2.push(sorted_backers[sorted_backers.length-step]);
+                }
+                subcat_topfund.push([temp1]);
+                subcat_topbackers.push([temp2]);
                 subcat_success.push([1]);
-
             } else {
 
                 var cat_index = cat_holder.indexOf(d.main_category);
@@ -92,6 +102,14 @@ var go = function () {
                     subcat_backers[cat_index].push(parseInt(d.backers));
                     subcat_fund[cat_index].push(parseFloat(d.usd_pledged_real));
                     subcat_success[cat_index].push(1);
+                    temp1=[];
+                    temp2=[];
+                    for (step=1;step<=10;step++){
+                      temp1.push(sorted_fund[sorted_fund.length-step]);
+                      temp2.push(sorted_backers[sorted_backers.length-step]);
+                    }
+                    subcat_topfund[cat_index].push(temp1);
+                    subcat_topbackers[cat_index].push(temp2);
 
                 } else { // modify subcat
 
@@ -136,7 +154,9 @@ var go = function () {
                     freq: subcat_freq[cat_i][subcat_i],
                     fund: subcat_fund[cat_i][subcat_i],
                     backers: subcat_backers[cat_i][subcat_i],
-                    success: subcat_freq[cat_i][subcat_i]
+                    success: subcat_freq[cat_i][subcat_i],
+                    topFund: subcat_topfund[cat_i][subcat_i],
+                    topBack: subcat_topbackers[cat_i][subcat_i]
                 }
                 new_cat["children"].push(new_subcat);
             })
