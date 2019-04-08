@@ -19,20 +19,6 @@ svg.append("text")
 .attr("class", "cir_text")
 .text("Hold up buddy");
 
-body.append("h4").html("Most backers")
-
-var table = body.append("table")
-.attr("id", "tableBoi")
-.style("border","2px solid black")
-.style("text-align","center");
-
-body.append("h4").html("Most funding")
-
-var table2 = body.append("table")
-.attr("id", "tableBoi2")
-.style("border","2px solid black")
-.style("text-align","center");
-
 // colors
 var hue = 145;
 var hue_step;
@@ -286,17 +272,36 @@ var makeChart = function (data, thing) {
         d3.event.stopPropagation();
         d3.select(this);
 
+        var makeTable = function() {
+            body.append("h4").html("Most backers")
+
+            var table = body.append("table")
+            .attr("class", "table table-bordered table-hover")
+            .attr("id", "tableBoi")
+            // .style("border","2px solid black")
+            .style("text-align","center");
+
+            body.append("h4").html("Most funding")
+
+            var table2 = body.append("table")
+            .attr("class", "table table-bordered table-hover")
+            .attr("id", "tableBoi2")
+            // .style("border","2px solid black")
+            .style("text-align","center");
+            theHTML="<thead><tr><th>Project</th><th>Funding</th><th>Backers</th></tr></thead>"
+            for (i=0;i<e.data.topBack.length;i++){
+                theHTML+="<tr><td>"+e.data.topBack[i].name+"</td><td>$"+e.data.topBack[i].usd_pledged_real+"</td><td>"+e.data.topBack[i].backers+"</td></tr>";
+            }
+            table.html(theHTML);
+            theHTML="<thead><tr><th>Project</th><th>Funding</th><th>Backers</th></tr></thead>"
+            for (i=0;i<e.data.topFund.length;i++){
+                theHTML+="<tr><td>"+e.data.topFund[i].name+"</td><td>$"+e.data.topFund[i].usd_pledged_real+"</td><td>"+e.data.topFund[i].backers+"</td></tr>";
+            }
+            table2.html(theHTML);
+        }
+
         console.log(e.data);
-        theHTML="<td>Project</td><td>Funding</td><td>Backers</td>"
-        for (i=0;i<e.data.topBack.length;i++){
-          theHTML+="<tr><td>"+e.data.topBack[i].name+"</td><td>$"+e.data.topBack[i].usd_pledged_real+"</td><td>"+e.data.topBack[i].backers+"</td></tr>";
-        }
-        table.html(theHTML);
-        theHTML="<td>Project</td><td>Funding</td><td>Backers</td>"
-        for (i=0;i<e.data.topFund.length;i++){
-          theHTML+="<tr><td>"+e.data.topFund[i].name+"</td><td>$"+e.data.topFund[i].usd_pledged_real+"</td><td>"+e.data.topFund[i].backers+"</td></tr>";
-        }
-        table2.html(theHTML);
+        makeTable();
         //console.log(e.data.name);
     };
 
