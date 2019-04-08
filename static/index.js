@@ -19,6 +19,11 @@ svg.append("text")
 .attr("class", "cir_text")
 .text("Hold up buddy");
 
+var table = body.append("table")
+.attr("id", "tableBoi")
+.style("border","2px solid black")
+.style("text-align","center");
+
 // colors
 var hue = 145;
 var hue_step;
@@ -273,6 +278,11 @@ var makeChart = function (data, thing) {
         d3.select(this);
 
         console.log(e.data);
+        theHTML="<td>Project</td><td>Funding</td><td>Backers</td>"
+        for (i=0;i<e.data.topBack.length;i++){
+          theHTML+="<tr><td>"+e.data.topBack[i].name+"</td><td>$"+e.data.topBack[i].usd_pledged_real+"</td><td>"+e.data.topBack[i].backers+"</td></tr>";
+        }
+        table.html(theHTML);
         //console.log(e.data.name);
     };
 
