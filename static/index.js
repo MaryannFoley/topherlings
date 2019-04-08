@@ -291,7 +291,7 @@ var makeChart = function (data, thing) {
             .attr("id", "tableBoi")
             // .style("border","2px solid black")
             .style("text-align","center");
-
+            tab2_container.html("");
             tab2_container.append("h4").html("Most funding").attr("class", "table_heading");
 
             var table2 = tab2_container.append("table")
