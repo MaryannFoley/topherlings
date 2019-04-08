@@ -1,4 +1,4 @@
-let HEIGHT = 700;
+let HEIGHT = 900;
 let WIDTH = 900;
 
 var body = d3.select("body");
@@ -269,17 +269,32 @@ var makeChart = function (data, thing) {
         label.attr("transform", d => "translate(" + d.x + "," + d.y + ")");
 
     var view = [bubble(nodes).x, bubble(nodes).y, bubble(nodes).r * 2]
+    view = [0,0,WIDTH];
+
+    //zoomTo(view);
+
+    // function zoomTo(v) {
+    //     const k = (WIDTH  / 2) / v[2];
+    //
+    //     // console.log(k);
+    //     view = v;
+    //
+    //     label.attr("transform", d => "translate(" + d.x + "," + d.y + ")");
+    //     node.attr("transform", d => "translate(" + d.x + "," + d.y + ")");
+    //     node.attr("r", d => d.r);
+    // }
 
     function zoomTo(v) {
-        const k = (WIDTH  / 2) / v[2];
+        const k = WIDTH / v[2];
 
-        // console.log(k);
         view = v;
 
-        label.attr("transform", d => "translate(" + d.x + "," + d.y + ")");
-        node.attr("transform", d => "translate(" + d.x + "," + d.y + ")");
-        node.attr("r", d => d.r);
+        label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+        node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
+        node.attr("r", d => d.r * k);
     }
+
+
 
     function zoom(d) {
         const focus0 = focus;
@@ -289,7 +304,7 @@ var makeChart = function (data, thing) {
         const transition = svg.transition()
             .duration(d3.event.altKey ? 7500 : 750)
             .tween("zoom", d => {
-              const i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2]);
+              const i = d3.interpolateZoom(view, [focus.x-75, focus.y-75, focus.r * 3.0]);
               return t => zoomTo(i(t));
             });
 
