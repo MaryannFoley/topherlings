@@ -21,6 +21,9 @@ Data on kickstarter projects since the launch of kickstarter in 2009 till 2018. 
 * Dynamic sizing and arrangement to reflect relative values
 * Data presented as [basic bubble charts](https://observablehq.com/@d3/bubble-chart) or [zoomable bubble charts](https://observablehq.com/@d3/zoomable-circle-packing) if time allows
 
+<img src="./screenshots/categories.png" width="500"/>
+<img src="./screenshots/subcategory.png" width="700"/>
+
 ### Launch Instructions
 1. Go to [root repository](https://github.com/MaryannFoley/topherlings) and click "Clone or Download" button
 2. Copy the ssh/https link and run `$ git clone <link>`
